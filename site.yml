@@ -1,23 +1,17 @@
 ---
-- name: Test SSH connection to Juniper devices using SSH key
+- name: Get device information
   hosts: swt1
-  gather_facts: no
   connection: local
+  gather_facts: no
 
   tasks:
-    - name: Exécution de la commande 
-      juniper.device.config:
-        config_mode: "private"
-        timeout: "90"
-        load: "set"
-        lines:
-           - "set vlans semaphore.777 vlan-id 777"
-           - "set vlans sema.888 vlan-id 888"
-           
-      register: response
+    - name: Get software and uptime information
+      juniper.device.command:        
+        commands: 
+          - "show version"        
+          - "show system uptime"
+      register: junos_result
 
-    - name: "Print the response"
-      debug:
-        var: response
-  
-
+    - name: Print response
+      ansible.builtin.debug:
+        var: junos_result
