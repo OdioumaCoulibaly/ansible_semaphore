@@ -1,0 +1,18 @@
+---
+- name: Test SSH connection to Juniper devices using SSH key
+  hosts: swt1
+  gather_facts: no
+    #  connection: local
+
+
+  tasks:
+    - name: Create list of users
+      ansible.netcommon.cli_command:
+        command:
+              show interfaces ge-0/0/1
+
+      register: res
+    - name: affichage du resultat
+      debug:
+        var: res
+
