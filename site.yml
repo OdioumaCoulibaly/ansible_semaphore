@@ -2,17 +2,22 @@
 - name: Test SSH connection to Juniper devices using SSH key
   hosts: swt1
   gather_facts: no
-    #  connection: local
-
+  connection: local
 
   tasks:
-    - name: Create list of users
-      ansible.netcommon.cli_command:
-        command:
-              show interfaces ge-0/0/1
+    - name: Exécution de la commande 
+      juniper.device.config:
+        config_mode: "private"
+        timeout: "90"
+        load: "set"
+        lines:
+           - "set vlans semaphore.777 vlan-id 777"
+           - "set vlans sema.888 vlan-id 888"
+           
+      register: response
 
-      register: res
-    - name: affichage du resultat
+    - name: "Print the response"
       debug:
-        var: res
+        var: response
+  
 
