@@ -3,6 +3,8 @@
   hosts: swt1
   connection: local
   gather_facts: no
+  collections:
+    - juniper.device
 
   tasks:
     - name: Get software and uptime information
