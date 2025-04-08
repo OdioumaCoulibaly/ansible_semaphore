@@ -1,0 +1,30 @@
+---
+- name: set commande
+  hosts: "{{ HOST_TARG }}"
+  gather_facts: no
+  connection: local
+
+#----------------------------------- A adapter ----------------------------------------
+
+    CONFIRM_TIME: 10 # à adapter
+    DIR_RESULT:  /tmp # à adapter
+
+#-------------------------------------------------------------------------------------
+        
+  tasks:
+    - name: Exécution des commandes
+      juniper.device.config:
+        config_mode: "private"
+        timeout: "90"
+        load: "set"
+        lines:
+           - "set vlans generic_s.1212 vlan-id 1212"
+           - "set vlans gen_s.1313 vlan-id 1313"
+
+        confirmed: "{{ CONFIRM_TIME }}"
+        dest_dir: "{{ DIR_RESULT }}"
+      register: response
+
+    - name: "Résultat de l'exécution"
+      debug:
+        var: response
