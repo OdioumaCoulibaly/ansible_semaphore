@@ -1,6 +1,6 @@
 ---
 - name: set commande
-  hosts: "{{ HOST_TARG }}"
+  hosts: swt1
   gather_facts: no
   connection: local
 
