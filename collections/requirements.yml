@@ -1,4 +1,5 @@
 ---
 collections:
   - name: juniper.device
+    version: 1.0.5
   - name: ansible.netcommon
