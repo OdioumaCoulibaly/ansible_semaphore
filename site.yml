@@ -1,6 +1,6 @@
 ---
 - name: Get device information
-  hosts: swt1
+  hosts: all
   connection: local
   gather_facts: no
   collections:
