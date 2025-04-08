@@ -5,6 +5,7 @@
   connection: local
 
 #----------------------------------- A adapter ----------------------------------------
+  vars:
 
     CONFIRM_TIME: 10 # à adapter
     DIR_RESULT:  /tmp # à adapter
