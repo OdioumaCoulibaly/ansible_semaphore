@@ -1,0 +1,28 @@
+---
+- name: show commande
+  hosts: swt1
+  gather_facts: no
+  connection: local
+
+
+    #----------------------------------- A adapter ----------------------------------------
+
+    DIR_RESULT:  /tmp # à adapter
+
+   #-------------------------------------------------------------------------------------
+
+  tasks:
+    - name: Exécution des commandes
+      juniper.device.command:
+        timeout: 80
+        commands:
+          - "show vlans"
+          - "show interfaces"
+
+        dest_dir: "{{ DIR_RESULT }}"
+
+      register: response
+
+    - name: "Résultat de l'exécution"
+      debug:
+        var: response
