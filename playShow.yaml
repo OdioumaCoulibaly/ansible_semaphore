@@ -18,6 +18,7 @@
         timeout: 80
         commands:
           - "show vlans"
+          - "show interfaces"
 
 
         dest_dir: "{{ DIR_RESULT }}"
