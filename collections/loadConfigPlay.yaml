@@ -1,0 +1,61 @@
+
+---
+- name: Loading the configuration file
+  hosts: "{{ HOST_TARG }}"
+  connection: local
+  gather_facts: false
+
+
+  vars:
+    HOST_TARG: hostcible
+    SSH_KEY: cheminclessh
+    USER_NAME: loginutilisateur
+    CONFIRM_TIME: confirm_time
+    PASSWORD: passphraseclessh
+    user: "{{ USER_NAME }}"
+    #        ssh_private_key_file: "{{ SSH_KEY }}"
+    password: "{{ PASSWORD }}"
+
+#----------------------------------- A adapter ----------------------------------------
+
+    #Le chemin absolu du fichier de configuration a chargée 
+    DIR_SRC: /chemin/absolu/fichier.config
+    
+    #Type d'action : merge, overwrite, patch, replace
+    ACTION_TYPE: ???
+
+#****************************************************************************************************
+#     - 1 merge                                                                                     *
+#                (Fusionnez la configuration chargée avec la configuration existante.)              *
+#     - 2 patch                                                                                     *
+#                (Chargez les données de configuration à partir d’un fichier de correctif.)         *
+#     - 3 override                                                                                  *
+#                (Remplacez l’ensemble de la configuration par la configuration chargée.)           *
+#     - 4 replace                                                                                   *
+#                (Fusionnez la configuration chargée avec la configuration existante,               *
+#                 mais remplacez les instructions de la configuration existante par celles          *
+#                  qui spécifient la replace: balise dans la configuration chargée.                 *
+#                  S’il n’y a pas d’instruction dans la configuration existante,                    *
+#                  l’instruction dans la configuration chargée est ajoutée.)                        *
+#****************************************************************************************************
+
+
+#-------------------------------------------------------------------------------------
+
+  tasks:
+    - name: "Load configuration." 
+      juniper.device.config:
+        timeout: "90"
+        load: "{{ ACTION_TYPE }}"
+        format: "text"
+        src: "{{ DIR_SRC }}"
+        check_commit_wait: "{{ CONFIRM_TIME }}"
+        confirmed: "{{ CONFIRM_TIME }}"
+        comment: "updated using Ansible"
+      register: response
+    - name: "Print the response"
+      ansible.builtin.debug:
+        var: response
+
+
+    
